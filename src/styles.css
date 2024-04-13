@@ -103,7 +103,7 @@ header {
   align-items: center;
 }
 
-header:first-child {
+.repos {
   margin-right: 1rem;
 }
 
