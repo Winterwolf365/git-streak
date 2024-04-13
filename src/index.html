@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Git Streak</title>
+  <script src="./main.js"></script>
+  <script src="./repositories.js" defer></script>
+  <script src="./settings.js" defer></script>
+  <script src="./styles.js" defer></script>
+</head>
+
+<body>
+  <div class="container">
+    <p id="streak"></p>
+
+    <p id="error"></p>
+
+    <header>
+      <h2 onclick="toggle()" class="nav-btn selected">repositories</h2>
+      <h2 onclick="toggle()" class="nav-btn">settings</h2>
+      <button class="styled-btn" onclick="add_repositories()">Add repository</button>
+    </header>
+
+    <section id="repositories">
+    </section>
+
+    <section id="settings" class="none">
+      <form>
+        <label for="startup">
+          <p>Start application on startup (applyed on restart of app)</p>
+        </label>
+        <input type="checkbox" name="startup" id="startup" onchange="set_startup()">
+      </form>
+      <form>
+        <label for="notifications">
+          <p>Send notifications when you're about to lose your streak</p>
+        </label>
+        <input type="checkbox" name="notifications" id="notifications" onchange="set_notifications()">
+      </form>
+    </section>
+  </div>
+  </div>
+</body>
+
+</html>

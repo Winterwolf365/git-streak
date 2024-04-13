@@ -1,0 +1,157 @@
+@font-face {
+  font-family: roadRage;
+  src: url(./assets/fonts/road_rage/Road_Rage.otf);
+}
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color: #0f0f0f;
+  background-color: #f6f6f6;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.container {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  /* so no extra overflow when much text or something else */
+  min-width: 600px;
+  max-width: 600px;
+}
+
+h1 {
+  text-align: center;
+}
+
+input,
+.styled-btn {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: #0f0f0f;
+  background-color: #ffffff;
+  transition: border-color 0.25s;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  cursor: pointer;
+}
+
+.styled-btn:hover {
+  border-color: #396cd8;
+}
+
+.styled-btn:active {
+  border-color: #396cd8;
+  background-color: #e8e8e8;
+}
+
+input,
+button {
+  outline: none;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    color: #f6f6f6;
+    background-color: #2f2f2f;
+  }
+
+  input,
+  .styled-btn {
+    color: #ffffff;
+    background-color: #0f0f0f98;
+  }
+
+  .styled-btn:active {
+    background-color: #0f0f0f69;
+  }
+} */
+
+#streak {
+  font-family: 'roadRage';
+  font-size: 6.5rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+}
+
+header:first-child {
+  margin-right: 1rem;
+}
+
+.styled-btn {
+  margin-left: auto;
+}
+
+main,
+form,
+.error {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-btn:hover {
+  font-style: oblique;
+  cursor: pointer;
+}
+
+.selected {
+  text-decoration: underline;
+}
+
+.none {
+  display: none;
+}
+
+.error {
+  color: red;
+  background-color: rgb(255, 233, 233);
+  border-radius: 4px;
+  padding: 4px 4px 4px 8px;
+  border: 1px red solid;
+  text-align: start;
+}
+
+.remove-error {
+  color: red;
+  background-color: rgb(255, 222, 222);
+  border-radius: 4px;
+  border: 1px red solid;
+}
+
+.remove-error:hover {
+  background-color: rgb(255, 233, 233);
+}
+
+.remove-error:active {
+  background-color: rgb(255, 202, 202);
+}
