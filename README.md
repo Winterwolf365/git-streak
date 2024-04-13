@@ -58,6 +58,7 @@ Just some ideas, that i maybe implement in the future.
 ## Known issues
 Windows:
 - Auto-launch on startup gets registerd in the os, but didnt work in my testing.
+
 MacOS:
 - Auto-launch on startup didnt work.
 - And when building with notifications support, i always got an error even with specific rust packages for MacOS. So they are disabled in the source code for MacOS.
