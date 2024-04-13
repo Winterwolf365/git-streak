@@ -1,7 +1,7 @@
 
 # Git Streak
 
-An desktop application for tracking your git commit streak.
+An desktop application for tracking the git commit streak on repositories.
 ## Installation
 ⚠️⚠️⚠️ Make sure you [git](https://git-scm.com/download) is installed on your system, before proceeding! ⚠️⚠️⚠️
 
