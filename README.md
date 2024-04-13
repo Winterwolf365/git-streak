@@ -5,7 +5,7 @@ An desktop application for tracking the git commit streak on repositories.
 ## Installation
 ⚠️⚠️⚠️ Make sure you [git](https://git-scm.com/download) is installed on your system, before proceeding! ⚠️⚠️⚠️
 
-There are official releases on the [releases page](https://github.com/Winterwolf365/git-streak/releases) for these pl atoms:
+There are official releases on the [releases page](https://github.com/Winterwolf365/git-streak/releases) for these platoms:
 
 - Windows Installer
 - Windows Portable
@@ -54,7 +54,7 @@ Just some ideas, that i maybe implement in the future.
 
 - Add custom icon instead of the default tauri icon.
 
-- Make Appimage on Linux, MSI installer on Windows and on MacOs make .app and .dmg work.
+- Make Appimage on Linux, MSI installer on Windows and on MacOs .app and .dmg work.
 ## Known issues
 Windows:
 - Auto-launch on startup gets registered in the OS, but didn't work in my testing.
