@@ -26,7 +26,7 @@ cargo tauri build
 
 Than you should have the installers for you system in `/src-tauri/target/release/bundle` and the portable script app should be located in `/src-tauri/target/release`.
 
-NOTE: In windows the msi isntaller didn't work, in  linux the AppImage wouldent open, and in MacOs the .app and .dmg didn't lauch when opened so for mac the only thing that worked was the portable script.
+NOTE: In windows the MSI installer didn't work, in Linux the AppImage wouldn't open, and in MacOs the .app and .dmg didn't launch when opened so for mac the only thing that worked was the portable script.
 ## Features
 
 - Add and remove repositories to local sqlite database.
@@ -48,17 +48,17 @@ More screenshots are in the `/screenshots` folder!
 
 Just some ideas, that i maybe implement in the future.
 
-- Fix known issus.
+- Fix known issues.
 
 - Add auto detect git repositories.
 
 - Add custom icon instead of the default tauri icon.
 
-- Make Appimage on linux, MSI installer on Windows and on MacOs make .app and .dmg work.
+- Make Appimage on Linux, MSI installer on Windows and on MacOs make .app and .dmg work.
 ## Known issues
 Windows:
-- Auto-launch on startup gets registerd in the os, but didnt work in my testing.
+- Auto-launch on startup gets registered in the OS, but didn't work in my testing.
 
 MacOS:
-- Auto-launch on startup didnt work.
+- Auto-launch on startup didn't work.
 - And when building with notifications support, i always got an error even with specific rust packages for MacOS. So they are disabled in the source code for MacOS.
