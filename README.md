@@ -9,7 +9,7 @@ There are official releases on the [releases page](https://github.com/Winterwolf
 
 - Windows Installer
 - Windows Portable
-- Ubuntu/Debian apt
+- Ubuntu/Debian deb
 - Fedoara/REHL rpm
 - MacOs Portable Script (with debug terminal)
 - Linux Portable
