@@ -18,9 +18,9 @@ pub async fn get_streak() -> i32 {
             let today = Local::now().date_naive();
             let yesterday = Local::now().date_naive() - Duration::days(1);
 
-            if newest_date == today || newest_date == yesterday {
-                streak += 1;
-            }
+            let commited_today_or_yesterday = newest_date == today || newest_date == yesterday;
+
+            streak = i32::from(commited_today_or_yesterday);
 
             if dates.len() == 1 {
                 return streak;
@@ -35,7 +35,7 @@ pub async fn get_streak() -> i32 {
                 }
 
                 if current_date + Duration::days(2) <= next_date {
-                    streak = 0;
+                    streak = i32::from(commited_today_or_yesterday);
                 }
             }
 

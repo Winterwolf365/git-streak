@@ -5,6 +5,7 @@ use sqlx::SqlitePool;
 struct Settings {
     startup: bool,
     notifications: bool,
+    all_authors: bool,
 }
 
 #[tauri::command]
@@ -18,7 +19,11 @@ pub async fn get_settings() -> Vec<bool> {
         .await
         .unwrap();
 
-    vec![settings.startup, settings.notifications]
+    vec![
+        settings.startup,
+        settings.notifications,
+        settings.all_authors,
+    ]
 }
 
 #[tauri::command]
@@ -67,4 +72,28 @@ pub async fn get_notifications_setting() -> bool {
         .await
         .unwrap()
         .notifications
+}
+
+#[tauri::command]
+pub async fn set_all_authors_setting(all_authors: bool) {
+    let pool = SqlitePool::connect(".git-streak-database.sqlite")
+        .await
+        .unwrap();
+
+    sqlx::query(format!("UPDATE settings SET all_authors = {all_authors}").as_str())
+        .execute(&pool)
+        .await
+        .unwrap();
+}
+
+pub async fn get_all_authors_setting() -> bool {
+    let pool = SqlitePool::connect(".git-streak-database.sqlite")
+        .await
+        .unwrap();
+
+    sqlx::query_as!(Settings, "SELECT * FROM settings")
+        .fetch_one(&pool)
+        .await
+        .unwrap()
+        .all_authors
 }

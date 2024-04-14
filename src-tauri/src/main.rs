@@ -85,16 +85,6 @@ async fn main() {
                     }
                 })
                 .icon(Image::from_bytes(&icon::get_icon_bytes()).unwrap())
-                // .icon(
-                //     Image::from_bytes(
-                //         &app.asset_resolver()
-                //             .get(String::from("icons/icon.png"))
-                //             .unwrap()
-                //             .bytes,
-                //     )
-                //     .unwrap(),
-                // )
-                // .icon_as_template(true)
                 .build(app)?;
 
             Ok(())
@@ -105,6 +95,7 @@ async fn main() {
             settings::get_settings,
             settings::set_startup_setting,
             settings::set_notifications_setting,
+            settings::set_all_authors_setting,
             repositories::get_repositories,
             repositories::add_repositories,
             repositories::delete_repository

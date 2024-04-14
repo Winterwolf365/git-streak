@@ -7,6 +7,8 @@ use sqlx::SqlitePool;
 // for windows https://learn.microsoft.com/en-us/windows/win32/procthread/process-creation-flags#flags
 #[cfg(target_os = "windows")]
 use std::os::windows::process::CommandExt;
+
+use crate::settings;
 #[cfg(target_os = "windows")]
 const CREATE_NO_WINDOW: u32 = 0x08000000;
 
@@ -17,25 +19,21 @@ struct Repository {
     path: String,
 }
 
-#[tauri::command]
-pub async fn get_repositories() -> Vec<(i64, String)> {
-    let pool = SqlitePool::connect(".git-streak-database.sqlite")
-        .await
-        .unwrap();
-
-    let repositories = sqlx::query_as!(Repository, "SELECT * FROM repositories")
-        .fetch_all(&pool)
-        .await
-        .unwrap();
-
-    repositories
-        .into_iter()
-        .map(|repository| (repository.id, repository.path))
-        .collect()
-}
-
 pub async fn get_repositories_days() -> Vec<Vec<NaiveDate>> {
     let repositories = get_repositories().await; // in (id, path format) so repo.1  = path
+    let mut author = String::new();
+
+    if !settings::get_all_authors_setting().await {
+        author = String::from_utf8(
+            Command::new("git")
+                .arg("config")
+                .arg("user.name")
+                .output()
+                .unwrap()
+                .stdout,
+        )
+        .unwrap();
+    }
 
     repositories
         .into_iter()
@@ -43,6 +41,8 @@ pub async fn get_repositories_days() -> Vec<Vec<NaiveDate>> {
             let mut binding = Command::new("git");
             let command = binding
                 .arg("log")
+                // format adds "\n" at end so we had to remove that
+                .arg(format!("--author={author}").lines().next().unwrap())
                 .arg("--pretty=%as") // get the committer date, short format (YYYY-MM-DD)
                 .current_dir(Path::new(&repository.1)); // in (id, path format) so repo.1  = path;
 
@@ -61,6 +61,23 @@ pub async fn get_repositories_days() -> Vec<Vec<NaiveDate>> {
 
             dates.into_iter().rev().collect::<Vec<NaiveDate>>()
         })
+        .collect()
+}
+
+#[tauri::command]
+pub async fn get_repositories() -> Vec<(i64, String)> {
+    let pool = SqlitePool::connect(".git-streak-database.sqlite")
+        .await
+        .unwrap();
+
+    let repositories = sqlx::query_as!(Repository, "SELECT * FROM repositories")
+        .fetch_all(&pool)
+        .await
+        .unwrap();
+
+    repositories
+        .into_iter()
+        .map(|repository| (repository.id, repository.path))
         .collect()
 }
 

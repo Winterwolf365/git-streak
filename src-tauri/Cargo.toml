@@ -1,6 +1,6 @@
 [package]
 name = "git-streak"
-version = "0.0.0"
+version = "0.0.1"
 description = "An app that track's your git commit streak!"
 authors = ["winterwolf365"]
 edition = "2021"
