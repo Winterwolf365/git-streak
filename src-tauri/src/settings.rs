@@ -1,4 +1,4 @@
-use sqlx::SqlitePool;
+use crate::database;
 
 #[allow(dead_code)] // becouse id is in the db but isn't used here
 #[derive(Debug, sqlx::FromRow)]
@@ -10,9 +10,7 @@ struct Settings {
 
 #[tauri::command]
 pub async fn get_settings() -> Vec<bool> {
-    let pool = SqlitePool::connect(".git-streak-database.sqlite")
-        .await
-        .unwrap();
+    let pool = database::pool().await;
 
     let settings = sqlx::query_as!(Settings, "SELECT * FROM settings")
         .fetch_one(&pool)
@@ -27,73 +25,22 @@ pub async fn get_settings() -> Vec<bool> {
 }
 
 #[tauri::command]
-pub async fn set_startup_setting(startup: bool) {
-    let pool = SqlitePool::connect(".git-streak-database.sqlite")
-        .await
-        .unwrap();
+pub async fn set_setting(setting: String, value: bool) {
+    let pool = database::pool().await;
 
-    sqlx::query(format!("UPDATE settings SET startup = {startup}").as_str())
+    sqlx::query(format!("UPDATE settings SET {setting} = {value}").as_str())
         .execute(&pool)
         .await
         .unwrap();
 }
 
-pub async fn get_startup_setting() -> bool {
-    let pool = SqlitePool::connect(".git-streak-database.sqlite")
-        .await
-        .unwrap();
+pub async fn get_setting(setting: &str) -> bool {
+    let settings = get_settings().await;
 
-    sqlx::query_as!(Settings, "SELECT * FROM settings")
-        .fetch_one(&pool)
-        .await
-        .unwrap()
-        .startup
-}
-
-#[tauri::command]
-pub async fn set_notifications_setting(notifications: bool) {
-    let pool = SqlitePool::connect(".git-streak-database.sqlite")
-        .await
-        .unwrap();
-
-    sqlx::query(format!("UPDATE settings SET notifications = {notifications}").as_str())
-        .execute(&pool)
-        .await
-        .unwrap();
-}
-
-pub async fn get_notifications_setting() -> bool {
-    let pool = SqlitePool::connect(".git-streak-database.sqlite")
-        .await
-        .unwrap();
-
-    sqlx::query_as!(Settings, "SELECT * FROM settings")
-        .fetch_one(&pool)
-        .await
-        .unwrap()
-        .notifications
-}
-
-#[tauri::command]
-pub async fn set_all_authors_setting(all_authors: bool) {
-    let pool = SqlitePool::connect(".git-streak-database.sqlite")
-        .await
-        .unwrap();
-
-    sqlx::query(format!("UPDATE settings SET all_authors = {all_authors}").as_str())
-        .execute(&pool)
-        .await
-        .unwrap();
-}
-
-pub async fn get_all_authors_setting() -> bool {
-    let pool = SqlitePool::connect(".git-streak-database.sqlite")
-        .await
-        .unwrap();
-
-    sqlx::query_as!(Settings, "SELECT * FROM settings")
-        .fetch_one(&pool)
-        .await
-        .unwrap()
-        .all_authors
+    match setting {
+        "startup" => settings[0],
+        "notifications" => settings[1],
+        "all_authors" => settings[2],
+        _ => false,
+    }
 }

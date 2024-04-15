@@ -5,7 +5,7 @@ use std::{thread, time::Duration};
 
 pub async fn run_notifications() {
     loop {
-        if !settings::get_notifications_setting().await {
+        if !settings::get_setting("notifications").await {
             wait_and_continue();
         }
 

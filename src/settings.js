@@ -9,14 +9,14 @@ async function get_settings() {
 }
 
 async function set_startup() {
-    await invoke('set_startup_setting', { startup: document.querySelector("#startup").checked });
+    await invoke('set_setting', { setting: "startup", value: document.querySelector("#startup").checked });
 }
 
 async function set_notifications() {
-    await invoke('set_notifications_setting', { notifications: document.querySelector("#notifications").checked });
+    await invoke('set_setting', { setting: "notifications", value: document.querySelector("#notifications").checked });
 }
 
 async function set_all_authors() {
-    await invoke('set_all_authors_setting', { allAuthors: document.querySelector("#all_authors").checked });
+    await invoke('set_setting', { setting: "all_authors", value: document.querySelector("#all_authors").checked });
     reload();
 }

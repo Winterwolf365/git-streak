@@ -1,13 +1,13 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod database;
 mod icon;
 mod notifications;
 mod repositories;
 mod settings;
 mod streak;
 
-use sqlx::{sqlite::SqliteConnectOptions, SqlitePool};
 use tauri::{
     image::Image,
     menu::{MenuBuilder, MenuItemBuilder},
@@ -18,19 +18,14 @@ use tauri_plugin_autostart::{MacosLauncher, ManagerExt};
 
 #[tokio::main]
 async fn main() {
-    let options = SqliteConnectOptions::new()
-        .filename(".git-streak-database.sqlite")
-        .create_if_missing(true);
-    let database_pool = SqlitePool::connect_with(options).await.unwrap();
-
-    sqlx::migrate!().run(&database_pool).await.unwrap();
-
-    let autostart = settings::get_startup_setting().await;
-
+    database::migrate().await;
     tokio::spawn(async {
+        // becouse macos always gives weird build error
         #[cfg(not(target_os = "macos"))]
         notifications::run_notifications().await;
     });
+
+    let autostart = settings::get_setting("startup").await;
 
     tauri::Builder::default()
         .plugin(tauri_plugin_autostart::init(
@@ -93,9 +88,7 @@ async fn main() {
         .invoke_handler(tauri::generate_handler![
             streak::get_streak,
             settings::get_settings,
-            settings::set_startup_setting,
-            settings::set_notifications_setting,
-            settings::set_all_authors_setting,
+            settings::set_setting,
             repositories::get_repositories,
             repositories::add_repositories,
             repositories::delete_repository
